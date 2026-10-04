@@ -2,12 +2,358 @@
   "info": {
     "_postman_id": "d271fb23-00e4-4c3b-8de2-2b6f0372bea3",
     "name": "Restful-booker",
-    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "description": "Manual API tests for the Restful-booker practice.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "58690461",
     "_collection_link": "https://go.postman.co/collection/58690461-d271fb23-00e4-4c3b-8de2-2b6f0372bea3?source=collection_link"
   },
   "item": [
+    {
+      "name": "Negative tests",
+      "item": [
+        {
+          "name": "Update booking(PUT) no auth",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": " {\r\n  \"firstname\": \"Dusan\",\r\n  \"lastname\": \"Updated\",\r\n  \"totalprice\": 300,\r\n  \"depositpaid\": false,\r\n  \"bookingdates\": { \"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\" },\r\n  \"additionalneeds\": \"Breakfast\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingID}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update booking(PUT) invalid token",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token=xyz"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": " {\r\n  \"firstname\": \"Dusan\",\r\n  \"lastname\": \"Updated\",\r\n  \"totalprice\": 300,\r\n  \"depositpaid\": false,\r\n  \"bookingdates\": { \"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\" },\r\n  \"additionalneeds\": \"Breakfast\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingID}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update booking(PUT) bad body",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": " {\r\n  \"firstname\": \"Dusan\",\r\n  \r\n  \"totalprice\": 300,\r\n  \"depositpaid\": false,\r\n  \"bookingdates\": { \"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\" },\r\n  \"additionalneeds\": \"Breakfast\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/booking/{{bookingID}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "{{bookingID}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create booking missing body fields",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "   {\r\n     \"firstname\": \"Dusan\",\r\n     \r\n     \"totalprice\": 150,\r\n     \"depositpaid\": true,\r\n     \"bookingdates\": { \"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\" },\r\n     \"additionalneeds\": \"Breakfast\"\r\n   }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create booking bad body type",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "   {\r\n     \"firstname\": \"Dusan\",\r\n     \"lastname\": \"Test\",\r\n     \"totalprice\": \"Sto\",\r\n     \"depositpaid\": true,\r\n     \"bookingdates\": { \"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\" },\r\n     \"additionalneeds\": \"Breakfast\"\r\n   }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create booking checkout before check-in",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "   {\r\n     \"firstname\": \"Dusan\",\r\n     \"lastname\": \"Test\",\r\n     \"totalprice\": 150,\r\n     \"depositpaid\": true,\r\n     \"bookingdates\": { \"checkin\": \"2026-11-05\", \"checkout\": \"2026-11-01\" },\r\n     \"additionalneeds\": \"Breakfast\"\r\n   }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create booking bad JSON",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "   {\r\n     \"firstname\": \"Dusan\",\r\n     \"lastname\": \"Test\"\r\n     \"totalprice\": 150,\r\n     \"depositpaid\": true,\r\n     \"bookingdates\": { \"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\" },\r\n     \"additionalneeds\": \"Breakfast\"\r\n   }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get booking by fake ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking/asdadads",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking",
+                "asdadads"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Booking with no ID",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Cookie",
+                "value": "token={{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create booking with no Accept",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "disabled": true
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "   {\r\n     \"firstname\": \"Dusan\",\r\n     \"lastname\": \"Test\",\r\n     \"totalprice\": 150,\r\n     \"depositpaid\": true,\r\n     \"bookingdates\": { \"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\" },\r\n     \"additionalneeds\": \"Breakfast\"\r\n   }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create booking with unsupported Accept",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/pdf"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "   {\r\n     \"firstname\": \"Dusan\",\r\n     \"lastname\": \"Test\",\r\n     \"totalprice\": 150,\r\n     \"depositpaid\": true,\r\n     \"bookingdates\": { \"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\" },\r\n     \"additionalneeds\": \"Breakfast\"\r\n   }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/booking",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "booking"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
     {
       "name": "Health check-ping",
       "request": {
@@ -53,13 +399,13 @@
           }
         ],
         "url": {
-          "raw": "{{baseUrl}}/booking/3869",
+          "raw": "{{baseUrl}}/booking/{{bookingID}}",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
             "booking",
-            "3869"
+            "{{bookingID}}"
           ]
         }
       },
@@ -123,6 +469,130 @@
       "response": []
     },
     {
+      "name": "Update booking(PUT)",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Cookie",
+            "value": "token={{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": " {\r\n  \"firstname\": \"Dusan\",\r\n  \"lastname\": \"Updated\",\r\n  \"totalprice\": 300,\r\n  \"depositpaid\": false,\r\n  \"bookingdates\": { \"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\" },\r\n  \"additionalneeds\": \"Breakfast\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/booking/{{bookingID}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "booking",
+            "{{bookingID}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Update booking(BasicAuth)",
+      "request": {
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "username",
+              "value": "{{username}}",
+              "type": "string"
+            },
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Cookie",
+            "value": "token={{token}}",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": " {\r\n  \"firstname\": \"Dusan\",\r\n  \"lastname\": \"Updated\",\r\n  \"totalprice\": 300,\r\n  \"depositpaid\": false,\r\n  \"bookingdates\": { \"checkin\": \"2026-11-01\", \"checkout\": \"2026-11-05\" },\r\n  \"additionalneeds\": \"Breakfast\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/booking/{{bookingID}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "booking",
+            "{{bookingID}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Partial Update",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Cookie",
+            "value": "token={{token}}"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{ \"firstname\": \"Marko\", \"totalprice\": 999 }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/booking/{{bookingID}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "booking",
+            "{{bookingID}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
       "name": "Delete Booking",
       "request": {
         "method": "DELETE",
@@ -133,13 +603,13 @@
           }
         ],
         "url": {
-          "raw": "{{baseUrl}}/booking/3869",
+          "raw": "{{baseUrl}}/booking/{{bookingID}}",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
             "booking",
-            "3869"
+            "{{bookingID}}"
           ]
         }
       },
