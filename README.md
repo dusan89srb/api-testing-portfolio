@@ -73,10 +73,25 @@ api-testing-portfolio/
 
 - [x] Manual API testing in Postman (CRUD, authentication, negative tests)
 - [x] Postman test scripts, request chaining, dynamic data and schema validation
-- [ ] Run the collection with Newman and generate HTML reports
+- [x] Run the collection with Newman and generate HTML reports
 - [ ] Python + pytest + requests test suite (API client layer, fixtures, schema validation)
 - [ ] CI with GitHub Actions
 - [ ] API tests in Robot Framework (RequestsLibrary)
+
+## How to run with Newman (CLI)
+
+```bash
+npm install -g newman newman-reporter-htmlextra
+
+newman run postman/Restful-booker.postman_collection.json \
+  --env-var "baseUrl=https://restful-booker.herokuapp.com" \
+  --env-var "username=admin" \
+  --env-var "password=password123" \
+  -r cli,htmlextra \
+  --reporter-htmlextra-export reports/report.html
+```
+
+The run exits with code 1 because 11 tests intentionally fail on known defects. In a CI pipeline this fails the build and the HTML report shows which assertion failed.
 
 ## Author
 
